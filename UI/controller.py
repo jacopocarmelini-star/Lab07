@@ -19,9 +19,20 @@ class Controller:
 
     # POPOLA DROPDOWN
     # TODO
+    def popola_dropdown(self):
+        musei = self._model.get_musei()
+        self._view.dropdown_musei.options.clear()
+        for id_museo, nome in musei:
+            self._view.dropdown_musei.options.append(ft.dropdown.Option(key=id_museo, text=nome))
+
+        self._view.update()
+
+
+
 
     # CALLBACKS DROPDOWN
     # TODO
+
 
     # AZIONE: MOSTRA ARTEFATTI
     # TODO

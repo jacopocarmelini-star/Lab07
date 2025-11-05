@@ -18,6 +18,7 @@ class Model:
         """Restituisce la lista di tutti gli artefatti filtrati per museo e/o epoca (filtri opzionali)."""
         # TODO
 
+
     def get_epoche(self):
         """Restituisce la lista di tutte le epoche."""
         # TODO
@@ -26,4 +27,9 @@ class Model:
     def get_musei(self):
         """ Restituisce la lista di tutti i musei."""
         # TODO
+        lista_musei = self._museo_dao.estrai_musei()
+        return lista_musei
+
+
+
 
