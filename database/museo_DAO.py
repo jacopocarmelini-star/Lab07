@@ -20,8 +20,8 @@ class MuseoDAO:
         risultati = cursor.fetchall()
         lista_musei = []
         for riga in risultati:
-            id_museo, nome, tipologia = riga
-            museo = Museo(id_museo, nome, tipologia)
+            id_museo, nome = riga
+            museo = Museo(id_museo, nome, None)
             lista_musei.append(museo)
 
         cursor.close()

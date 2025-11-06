@@ -12,20 +12,40 @@ class ArtefattoDAO:
         pass
 
     # TODO
-    def estrai_artefatti(self):
+    def estrai_epoche(self, id_museo):
+        cnx = ConnessioneDB.get_connection()
+        cursor = cnx.cursor()
+        query = """SELECT DISTINCT epoca
+                    FROM artefatto
+                    ORDER BY epoca ASC"""
+
+        cursor.execute(query)
+        risultati = cursor.fetchall()
+        lista_epoche = []
+        for riga in risultati:
+            epoca = riga[0]
+            lista_epoche.append(epoca)
+        cursor.close()
+        cnx.close()
+        return lista_epoche
+
+    def estrai_artefatti(self, id_museo, epoca):
         cnx = ConnessioneDB.get_connection()
         cursor = cnx.cursor()
         query = """SELECT *
-                    FROM artefatto"""
-        cursor.execute(query)
-        lista_artefatti = cursor.fetchall()
+                    FROM artefatto
+                    WHERE (%s IS NULL OR id_museo=%s)
+                        AND (%s IS NULL OR epoca=%s)"""
+        cursor.execute(query, (id_museo,id_museo, epoca, epoca))
+
+        risultati = cursor.fetchall()
+        lista_artefatti = []
+        for riga in risultati:
+            id, nome, tipologia, epoca, id_museo = riga
+            artefatto = Artefatto(id, nome, tipologia, epoca, id_museo)
+            lista_artefatti.append(artefatto)
         cursor.close()
         cnx.close()
         return lista_artefatti
 
-    def estrai_epoche(self):
-        cnx = ConnessioneDB.get_connection()
-        cursor = cnx.cursor()
-        query = """SELECT epoche
-                    FROM artefatto  """
 

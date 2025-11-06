@@ -43,10 +43,9 @@ class View:
 
         self.dropdown_epoca = ft.Dropdown(label="Epoca",
                                           options=[],
-                                          width=400
-                                          on_change=self.controller)
+                                          width=400)
 
-        self.controller.popola_dropdown()
+        self.controller.popola_dropdown_musei()
 
         # Sezione 3: Artefatti
         # TODO
@@ -64,9 +63,10 @@ class View:
 
             # Sezione 2: Filtraggio
             # TODO
-            ft.Text("Musei disponibili", size=20),
-            self.dropdown_musei,
-            ft.Divider(),
+            ft.Row(controls=[self.dropdown_musei, self.dropdown_epoca],
+                   alignment=ft.MainAxisAlignment.CENTER),
+            ft.Divider()
+
 
             # Sezione 3: Artefatti
             # TODO
