@@ -12,7 +12,7 @@ class ArtefattoDAO:
         pass
 
     # TODO
-    def estrai_epoche(self, id_museo):
+    def estrai_epoche(self):
         cnx = ConnessioneDB.get_connection()
         cursor = cnx.cursor()
         query = """SELECT DISTINCT epoca
@@ -40,8 +40,8 @@ class ArtefattoDAO:
 
         risultati = cursor.fetchall()
         lista_artefatti = []
-        for riga in risultati:
-            id, nome, tipologia, epoca, id_museo = riga
+
+        for (id, nome, tipologia, epoca, id_museo) in risultati:
             artefatto = Artefatto(id, nome, tipologia, epoca, id_museo)
             lista_artefatti.append(artefatto)
         cursor.close()

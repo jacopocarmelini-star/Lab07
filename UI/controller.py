@@ -1,4 +1,6 @@
 import flet as ft
+
+from UI.alert import AlertManager
 from UI.view import View
 from model.model import Model
 
@@ -24,7 +26,17 @@ class Controller:
         self._view.dropdown_musei.options.clear()
         self._view.dropdown_musei.options.append(ft.dropdown.Option(key="", text="Nessun filtro"))
         for museo in musei:
-            self._view.dropdown_musei.options.append(ft.dropdown.Option(key=museo.id, text=museo.nome))
+            self._view.dropdown_musei.options.append(ft.DropdownOption(key=museo.id, text=museo.nome))
+
+        self._view.update()
+
+    def popola_dropdown_epoche(self):
+        epoche = self._model.get_epoche()
+        self._view.dropdown_epoche.options.clear()
+        self._view.dropdown_epoche.options.append(ft.dropdown.Option(key="", text="Nessun filtro"))
+
+        for epoca in epoche:
+            self._view.dropdown_epoche.options.append(ft.DropdownOption(key=epoca, text=epoca))
 
         self._view.update()
 
@@ -39,3 +51,24 @@ class Controller:
 
     # AZIONE: MOSTRA ARTEFATTI
     # TODO
+    def mostra_artefatti(self, e):
+        museo = self.museo_selezionato
+        epoca = self.epoca_selezionata
+
+        if museo == "Nessun filtro":
+            museo = None
+        if epoca == "Nessun filtro":
+            epoca = None
+
+        artefatti = self._model.get_artefatti_filtrati(museo, epoca)
+
+        self._view.mostra_lista_artefatti.controls.clear()
+        if not artefatti:
+            self._view.mostra_lista_artefatti.controls.append(
+                ft.Text("Nessun artefatto trovato.", size=16))
+        else:
+            for artefatto in artefatti:
+                self._view.mostra_lista_artefatti.controls.append(
+                    ft.Text(f"{artefatto.id} | {artefatto.nome} | {artefatto.tipologia} | {artefatto.epoca}"))
+
+        self._view.update()

@@ -14,13 +14,13 @@ class MuseoDAO:
     def estrai_musei(self):
         cnx = ConnessioneDB.get_connection()
         cursor = cnx.cursor()
-        query = """SELECT id, nome
+        query = """SELECT id, nome, tipologia
                     FROM museo"""
         cursor.execute(query)
         risultati = cursor.fetchall()
         lista_musei = []
         for riga in risultati:
-            id_museo, nome = riga
+            id_museo, nome, tipologia = riga
             museo = Museo(id_museo, nome, None)
             lista_musei.append(museo)
 
