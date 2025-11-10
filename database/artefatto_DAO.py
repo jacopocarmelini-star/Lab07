@@ -16,8 +16,7 @@ class ArtefattoDAO:
         cnx = ConnessioneDB.get_connection()
         cursor = cnx.cursor()
         query = """SELECT DISTINCT epoca
-                    FROM artefatto
-                    ORDER BY epoca ASC"""
+                    FROM artefatto"""
 
         cursor.execute(query)
         risultati = cursor.fetchall()
@@ -33,8 +32,7 @@ class ArtefattoDAO:
         cnx = ConnessioneDB.get_connection()
         cursor = cnx.cursor()
         query = """SELECT *
-                    FROM artefatto
-                    WHERE (%s IS NULL OR id_museo=%s)
+                    FROM artefatto WHERE (%s IS NULL OR id_museo=%s)  
                         AND (%s IS NULL OR epoca=%s)"""
         cursor.execute(query, (id_museo,id_museo, epoca, epoca))
 

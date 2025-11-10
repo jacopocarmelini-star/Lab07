@@ -26,7 +26,7 @@ class Controller:
         self._view.dropdown_musei.options.clear()
         self._view.dropdown_musei.options.append(ft.dropdown.Option(key="", text="Nessun filtro"))
         for museo in musei:
-            self._view.dropdown_musei.options.append(ft.DropdownOption(key=museo.id, text=museo.nome))
+            self._view.dropdown_musei.options.append(ft.dropdown.Option(key=museo.id, text=museo.nome))
 
         self._view.update()
 
@@ -36,7 +36,7 @@ class Controller:
         self._view.dropdown_epoche.options.append(ft.dropdown.Option(key="", text="Nessun filtro"))
 
         for epoca in epoche:
-            self._view.dropdown_epoche.options.append(ft.DropdownOption(key=epoca, text=epoca))
+            self._view.dropdown_epoche.options.append(ft.dropdown.Option(key=epoca, text=epoca))
 
         self._view.update()
 
@@ -61,11 +61,13 @@ class Controller:
             epoca = None
 
         artefatti = self._model.get_artefatti_filtrati(museo, epoca)
-
         self._view.mostra_lista_artefatti.controls.clear()
+
+        if not self.museo_selezionato or not self.epoca_selezionata:
+            self._view.show_alert("Seleziona entrambi i filtri.")
+            return
         if not artefatti:
-            self._view.mostra_lista_artefatti.controls.append(
-                ft.Text("Nessun artefatto trovato.", size=16))
+            self._view.show_alert("Nessun artefatto trovato.")
         else:
             for artefatto in artefatti:
                 self._view.mostra_lista_artefatti.controls.append(
